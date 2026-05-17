@@ -1,0 +1,22 @@
+# FinWise AI — single Web Service (API + built Vite SPA).
+# Deploy: push this file to GitHub, then open:
+#   https://dashboard.render.com/blueprint/new?repo=https://github.com/<user>/<repo>
+#
+# Render sets RENDER_EXTERNAL_URL automatically; the server uses it for CORS when
+# CLIENT_ORIGIN is unset. Add secrets (OPENAI_API_KEY, SMTP_*, etc.) in the dashboard.
+services:
+  - type: web
+    name: finwise-ai
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: cd client && npm ci && npm run build && cd ../server && npm ci
+    startCommand: cd server && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: STATIC_DIST_DIR
+        value: ../client/dist
+      - key: OPENAI_API_KEY
+        sync: false

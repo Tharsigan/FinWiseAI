@@ -1,3 +1,6 @@
+import { existsSync } from "node:fs";
+import { join, resolve } from "node:path";
+
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
@@ -59,6 +62,21 @@ export function createFinwiseApp() {
   app.use("/api/intelligence", intelligenceRouter);
   app.use("/api/ai", aiRouter);
   app.use("/api/ai", aiMoneyAdviceRouter);
+
+  const staticDirRaw = process.env.STATIC_DIST_DIR?.trim();
+  const staticRoot = staticDirRaw
+    ? resolve(process.cwd(), staticDirRaw)
+    : "";
+  if (staticRoot && existsSync(staticRoot)) {
+    app.use(express.static(staticRoot));
+    app.use((req, res, next) => {
+      if (req.method !== "GET" || req.path.startsWith("/api")) {
+        next();
+        return;
+      }
+      res.sendFile(join(staticRoot, "index.html"), (err) => next(err));
+    });
+  }
 
   app.use(notFoundHandler);
   app.use(errorHandler);

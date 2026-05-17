@@ -10,7 +10,7 @@ const { warnForMissingSeylanEnv } = await import(
 
 const app = createFinwiseApp();
 
-app.listen(env.port, () => {
-  console.log(`FinWise AI API listening on http://localhost:${env.port}`);
+app.listen(env.port, "0.0.0.0", () => {
+  console.log(`FinWise AI API listening on port ${env.port}`);
   warnForMissingSeylanEnv();
 });

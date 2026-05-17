@@ -7,7 +7,10 @@ function truthy(raw) {
 
 export const env = {
   port: Number(process.env.PORT) || 5001,
-  clientOrigin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+  clientOrigin:
+    process.env.CLIENT_ORIGIN ||
+    process.env.RENDER_EXTERNAL_URL ||
+    "http://localhost:5173",
   seylan: {
     sandboxUrl: process.env.SEYLAN_SANDBOX_URL || "",
     lankaQrUrl: process.env.SEYLAN_SANDBOX_URL || "",
@@ -43,6 +46,7 @@ export const env = {
     passwordResetFrontendOrigin:
       process.env.PASSWORD_RESET_FRONTEND_ORIGIN ||
       process.env.CLIENT_ORIGIN ||
+      process.env.RENDER_EXTERNAL_URL ||
       "http://localhost:5173",
     passwordResetEmailFrom:
       process.env.SMTP_FROM || process.env.SMTP_USER || "no-reply@localhost",
