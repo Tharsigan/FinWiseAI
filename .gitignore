@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.env
+.DS_Store
+*.local
+client/dist/
+server/dist/
+server/data/
+*.sqlite
+
+# IDE / tooling noise
+.cursor/
+
+# Node / test artifacts
+npm-debug.log*
+coverage/
+client/.vite/
